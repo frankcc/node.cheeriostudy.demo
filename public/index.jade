@@ -28,7 +28,7 @@ html(ng-app='demoApp')
                 th.col-md-2 职位诱惑
                 th.col-md-1 查看
             tbody
-              tr(ng-repeat="item in lists" ng-filter='to_trusted')
+              tr(ng-repeat="item in lists")
                   td(ng-bind-html="item.company | to_trusted")
                   td(ng-bind-html="item.period | to_trusted")
                   td(ng-bind-html="item.scale | to_trusted")

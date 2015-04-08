@@ -38,7 +38,7 @@ app.get('/getList/:page',function(req,res){
               job.name = escaper.unescape($(this).find(".hot_pos_l a").attr("title")); //岗位名
               job.src = escaper.unescape($(this).find(".hot_pos_l a").attr("href")); //岗位链接
               job.salary = escaper.unescape($(this).find(".hot_pos_l span").eq(1).html());
-              job.allure = escaper.unescape($(this).find(".hot_pos_l span").eq(3).html()); //职位诱惑
+              job.allure = escaper.unescape($(this).find(".hot_pos_l span").eq(4).html()); //职位诱惑
               job.exp = escaper.unescape($(this).find(".hot_pos_l span").eq(2).html()); //岗位所需经验
              
               //console.log(job.period);  //控制台输出岗位名
