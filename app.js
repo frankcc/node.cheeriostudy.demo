@@ -8,8 +8,11 @@ escaper = require("true-html-escape")
 app.set('views', './public/')
 app.set('view engine', 'jade')
 app.use(express.static(path.join(__dirname, 'public')))
-app.get('/:page',function(req,res){
-  var page=req.params.key;
+app.get('/',function(req,res){
+    res.render('index');
+})
+app.get('/getList/:page',function(req,res){
+   var page=req.params.page;
   console.log(page)
   http.get(url+page,function(res1){  //通过get方法获取对应地址中的页面信息
 
@@ -24,9 +27,7 @@ app.get('/:page',function(req,res){
           var html = data.toString();
       //    console.log(html);
           var $ = cheerio.load(html); //cheerio模块开始处理 DOM处理
-
           var jobs = [];
-
           var jobs_list = $(".hot_pos li");
           $(".hot_pos>li").each(function(){   //对页面岗位栏信息进行处理  每个岗位对应一个 li  ,各标识符到页面进行分析得出
               var job = {};
@@ -40,16 +41,15 @@ app.get('/:page',function(req,res){
               job.allure = escaper.unescape($(this).find(".hot_pos_l span").eq(3).html()); //职位诱惑
               job.exp = escaper.unescape($(this).find(".hot_pos_l span").eq(2).html()); //岗位所需经验
              
-              console.log(job.period);  //控制台输出岗位名
+              //console.log(job.period);  //控制台输出岗位名
               jobs.push(job);  
           });
-         
-          res.render('index',{
-                Lists:jobs
+          res.jsonp({
+                Lists:jobs,
+                Page:parseInt(page)+1
               });
       });
   });
-    
 })
 
 app.listen(2333)
